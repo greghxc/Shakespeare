@@ -13,6 +13,8 @@ API key and fare information.
 ### Google API Key
 The Google Places API requires an API key. Shakespeare expects an
 environment variable name "GOOGLE_API_KEY" containing your API key.
+
+For more info, see: [Get a key for Google Places API Web Service](https://developers.google.com/places/web-service/get-api-key)
 ### Quote Profiles
 A __quote profile__ represents is the top level profile uses for calculating
 fares. A quote profile will likely reference a class of vehicle, like
