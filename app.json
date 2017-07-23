@@ -1,0 +1,6 @@
+{
+  "name": "Google Places Transportation Quotes",
+  "description": "A simple services to create quotes for user-designated transportation profiles, as used in the town car industry.",
+  "website": "https://gregmertzlufft.com",
+  "success_url": "/ip/8.8.8.8"
+}
