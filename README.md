@@ -3,12 +3,15 @@
 A simple akka-http service to create mileage-based transportation quotes
 from Google Places data, as used in the town car industry.
 
+Shakespeare was created to replace a handful of disparate scripts used
+in various projects in a framework I was interested in working in.
+
 ## Setup and Configuration
 A few bits of setup are required to configure Shakespeare, including an
 API key and fare information.
 ### Google API Key
 The Google Places API requires an API key. Shakespeare expects an
-environment variable name "googleApiKey" containing your API key.
+environment variable name "GOOGLE_API_KEY" containing your API key.
 ### Quote Profiles
 A __quote profile__ represents is the top level profile uses for calculating
 fares. A quote profile will likely reference a class of vehicle, like
@@ -35,4 +38,15 @@ Both of these values are set in `src/main/resources/fares.conf` as a
 decimal representation of the percentage (0.01 = 1%). Fuel surcharge and
 service fee values can be verified uses the __profiles__ endpoint.
 
+## Quick Start
+    export GOOGLE_API_KEY=[YOUR_API_KEY]
+    git clone https://github.com/greghxc/shakespeare.git
+    cd shakespeare
+    sbt run
 
+Visit API docs at http://localhost:9000/swagger
+
+## Contributions
+I've stared recording todo's and bugs in
+[Issues](https://github.com/greghxc/shakespeare/issues). Pull requests
+and new Issues are welcome.

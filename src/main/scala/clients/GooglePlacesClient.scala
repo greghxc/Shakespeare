@@ -10,7 +10,7 @@ import scala.concurrent.Future
 import scala.util.Properties
 
 object GooglePlacesClientSingleton extends GooglePlacesClient {
-  val apiKey: String = Properties.envOrElse("googleApiKey", "")
+  val apiKey: String = Properties.envOrElse("GOOGLE_API_KEY", "")
 
   override val context: GeoApiContext = new GeoApiContext().setApiKey(apiKey)
 }
