@@ -1,4 +1,5 @@
 # Shakespeare: Google Places Transportation Quotes
+![Build Status](https://circleci.com/gh/greghxc/shakespeare.svg?style=shield&circle-token=:circle-token)
 
 A simple akka-http service to create mileage-based transportation quotes
 from Google Places data, as used in the town car industry.
