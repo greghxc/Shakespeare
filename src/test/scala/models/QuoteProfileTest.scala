@@ -1,6 +1,6 @@
 package models
 
-import com.typesafe.config.{ConfigFactory, ConfigList, ConfigValue, ConfigObject}
+import com.typesafe.config.{ConfigFactory, ConfigList, ConfigValue}
 import org.scalatest.{FunSpec, Matchers}
 import spray.json._
 
@@ -31,7 +31,6 @@ class QuoteProfileTest extends FunSpec with Matchers {
   describe("fromConfig") {
     it("works") {
       val vehicles = FareConfig.vehicles
-      System.out.println(vehicles)
       true shouldEqual true
     }
   }

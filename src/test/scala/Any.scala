@@ -1,7 +1,7 @@
 package test
 
 import com.github.javafaker.Faker
-import com.google.maps.model.Distance
+import com.google.maps.model.{Distance, Duration}
 import models._
 
 object AnySingleton extends Any
@@ -26,12 +26,14 @@ class Any {
   def distanceResult = {
     val meters = faker.number().numberBetween(1000L, 20000L)
     val milesPerMeter = 0.000621371
+    val minutes = faker.number().numberBetween(8, 90)
 
     DistanceResult(
       meters = meters,
       miles = meters * milesPerMeter,
-      Some(addressResult),
-      Some(addressResult)
+      minutes = minutes,
+      origin = Some(addressResult),
+      destination = Some(addressResult)
     )
   }
 
@@ -84,9 +86,16 @@ class Any {
   }
 
   def distance: Distance = {
-    val distance = new Distance();
+    val distance = new Distance()
     distance.inMeters = faker.number().numberBetween(1000, 10000)
     distance.humanReadable = faker.lorem().word()
     distance
+  }
+
+  def duration: Duration = {
+    val duration = new Duration()
+    duration.inSeconds = faker.number().numberBetween(5*60, 90*60)
+    duration.humanReadable = faker.lorem().word()
+    duration
   }
 }

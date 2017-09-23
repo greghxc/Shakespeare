@@ -1,9 +1,9 @@
 package clients
 
 import com.google.maps.{DistanceMatrixApi, GeoApiContext, GeocodingApi}
-import com.google.maps.model.{AddressComponent, AddressComponentType, Distance, Unit}
+import com.google.maps.model.{AddressComponent, AddressComponentType, Distance, DistanceMatrix, DistanceMatrixElement, Unit}
 import exceptions.InvalidZipException
-import models.AddressResult
+import models.{AddressResult, DistanceMatrixResult}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -12,22 +12,26 @@ import scala.util.Properties
 object GooglePlacesClientSingleton extends GooglePlacesClient {
   val apiKey: String = Properties.envOrElse("GOOGLE_API_KEY", "")
 
-  override val context: GeoApiContext = new GeoApiContext().setApiKey(apiKey)
+  override val context: GeoApiContext = new GeoApiContext.Builder()
+    .apiKey(apiKey)
+    .build()
 }
 
 trait GooglePlacesClient {
   val context: GeoApiContext
 
-  def getDistance(origin: String, destination: String): Future[Distance] = {
+  def getDistanceMatrix(origin: String, destination: String): Future[DistanceMatrixResult] = {
     Future {
-      DistanceMatrixApi.newRequest(context)
-        .destinations(destination)
-        .origins(origin)
+      val matrix = DistanceMatrixApi.newRequest(context)
+        .destinations(destination, origin)
+        .origins(origin, destination)
         .units(Unit.IMPERIAL)
         .await
-        .rows(0)
-        .elements(0)
-        .distance
+      DistanceMatrixResult(
+        matrix.rows(0).elements(0).distance,
+        matrix.rows(1).elements(1).distance,
+        matrix.rows(0).elements(0).duration
+      )
     }
   }
 
@@ -41,6 +45,15 @@ trait GooglePlacesClient {
         postalCode = postalCode
       )
     }
+  }
+
+  def getAddresses(origin: String, destination: String): Future[Seq[AddressResult]] = {
+    val eventualOriginAddress = getAddress(origin)
+    val eventualDestinationAddress = getAddress(destination)
+    for {
+      origin <- eventualOriginAddress
+      destination <- eventualDestinationAddress
+    } yield { Seq(origin, destination) }
   }
 
   def getPostalCodeFromComponents(components: Array[AddressComponent]): String = {

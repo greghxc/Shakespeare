@@ -25,7 +25,7 @@ libraryDependencies ++= {
     "org.slf4j" % "slf4j-api" % "1.7.5",
     "org.slf4j" % "slf4j-simple" % "1.7.5",
     "com.github.swagger-akka-http" %% "swagger-akka-http" % "0.9.1",
-    "com.google.maps"   % "google-maps-services" % "0.1.17",
+    "com.google.maps"   % "google-maps-services" % "0.2.3",
     "com.github.javafaker" % "javafaker" % "0.13"
   )
 }
