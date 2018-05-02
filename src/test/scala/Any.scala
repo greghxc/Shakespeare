@@ -19,6 +19,7 @@ class Any {
     AddressResult(
       originalQuery = s"$street $city $state",
       formattedAddress = s"$street, $city, $state $zip, $country",
+      locality = s"$city",
       postalCode = zip
     )
   }

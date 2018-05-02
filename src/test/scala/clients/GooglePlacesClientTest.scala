@@ -1,7 +1,7 @@
 package clients
 
 import com.google.maps.model.{AddressComponent, AddressComponentType}
-import exceptions.InvalidZipException
+import exceptions.InvalidComponentException
 import org.scalatest.{FunSpec, Matchers}
 
 class ComponentHelper {
@@ -52,16 +52,22 @@ class GooglePlacesClientTest extends FunSpec with Matchers {
     }
     describe("when given an array of components with no postal_code") {
       it("throws expected exception") {
-        assertThrows[InvalidZipException] {
+        assertThrows[InvalidComponentException] {
           client.getPostalCodeFromComponents(componentHelper.componentsWithNoZip)
         }
       }
     }
     describe("when given an array of components with multiple postal_code") {
       it("throws expected exception") {
-        assertThrows[InvalidZipException] {
+        assertThrows[InvalidComponentException] {
           client.getPostalCodeFromComponents(componentHelper.componentsWithNoZip)
         }
+      }
+      it("has expected message") {
+        val e = intercept[InvalidComponentException] {
+          client.getPostalCodeFromComponents(componentHelper.componentsWithNoZip)
+        }
+        e.getMessage shouldBe "Unable to determine postal_code"
       }
     }
   }
